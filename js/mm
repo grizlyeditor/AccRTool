@@ -1,0 +1,24 @@
+freefire-toolkit/
+├── index.html
+├── login.html
+├── dashboard.html
+├── admin.html
+├── css/
+│   └── styles.css
+├── js/
+│   ├── firebase-config.js
+│   ├── auth.js
+│   ├── dashboard.js
+│   ├── workbench.js
+│   ├── modules.js
+│   ├── admin.js
+│   └── utils.js
+├── server/
+│   ├── server.js
+│   ├── api/
+│   │   ├── jwt.js
+│   │   ├── token.js
+│   │   ├── base64.js
+│   │   └── protobuf.js
+│   └── package.json
+└── README.md
