@@ -1,4 +1,4 @@
-// Firebase Configuration
+// Firebase Configuration - Environment variables se load karega
 const firebaseConfig = {
     apiKey: "AIzaSyB_Bv5jEIJrV6K8EbjO5lzZ5oX7Qm8N9d8",
     authDomain: "ejene-d8ff7.firebaseapp.com",
@@ -9,77 +9,68 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+try {
+    firebase.initializeApp(firebaseConfig);
+    console.log('✅ Firebase initialized successfully');
+} catch (error) {
+    console.error('❌ Firebase initialization error:', error);
+}
 
 // Initialize services
 const auth = firebase.auth();
 const db = firebase.firestore();
-
-// Firebase Admin SDK (for server-side operations)
-const adminConfig = {
-    "type": "service_account",
-    "project_id": "ejene-d8ff7",
-    "private_key_id": "a2ce7b7cf5ae878769eb6fb2308c2f2c5952d023",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCZT/b14ET8+Z93\nler9lyPPNw8yq119Q7Q3SSs/AseMrozsiW+KEqIR3KI7IbMdcUDSDMVP8FnJnb8v\nsc1h4KBfOX/E7KfPyx7bLtXZmlPcE2VMkKEYv8LSkXLmXcXSutMYlpt29V5eWlEG\nAl+AuJewbDRTbZsKF0QjMNNyrkV9kVgddejVlanGSghZkDfn1wq3E9nZio/E1NPO\nU65lKWrMz+ue9ftjH//ZQTC8GanqaelCcTG9SKu2+TY7WAqGj2QHsaQNzTU292Lk\nMevzYgxbPH94fg1Xl1zvkficQ6IsRbPwTbdobBX+9bl0MmNdq0zyTWdkvdRMc3DI\nt/vtUQ2/AgMBAAECggEAK/CGKDwJqbNlZ+G4wstxgO8X1P7WQZOI8BtxYJLMXF6e\nlyBgrmLevl3MxUPIURTnbgwo9Ns+8JDcfa/o3DeD3ybcnrTw95YQluMaeU5I4JdS\nfhopga1cCfuTwcB4dQgEflST5Ak47bPW6vD9LCg7mV25tXuBZuf6KFfTElguJGl1\nE02OTLK4y8jQPLoTm0ZhSVAaE5AD67EBX28Xs4JXBQxGSfqcWKN9DurkzQdj32zq\ni5HjdSA+gJSTyFSvC6394r5CwD7/hNi+X5M+6PRIRU3Brdjuknz8MLPb3DHrte+x\novF777eAtpswI1q/haeZZ/rlxEuIOdchebfWpO+bgQKBgQDJd03PHjbLw0t3H3IG\n6HngANaZEDCHv8Ns5gkvtPRisha0zrsPn7Db3yPr3RlpSTXyJbBzbutVH2PWLOoe\npnKrtS0XwZgLNe/dmNyjDKtG5egdwXK5HdMdgl3+o507lxSM7mGJz5RrSRnwvaB1\nt5+wZeakVRqS6Y8H/ULj1Y0zfwKBgQDCz9OamwVwOG1AO+0mAemtgNWOQqNSx9+L\ngoOrCys5llZwCiEFUKZpYr9aYRcqK8n/XXWJSaqipXGGbJoPzCUKMoqUQBS6vHTh\nKlP7viaAau4X/FPYVESgf8B8wfxVxCA+gmscHxlhtcquxOVh6kIyO017pAQuIvc6\nKD3gbwRFwQKBgCpqieE/dT31QiA0aKd3rqEwy/2x4OXTw+tbizeWG5Xj9M/gbpXd\ngzjnhAKWrFD0bv0qXjoPclCbqUNgdXI6jQ4FuRa1VbOWiYfYNSvG8RCeOv54yhSb\naOVfmzaPb/0p09PQJI0FPTRRUbrT0cK3BFH5QlP67vtbXRfLhJe/UFk1AoGBAITz\n/29Zcym2aOFYxK2Wypst/RFc60gYvrjgtump8rMXpiBK2WReOWRdD0koT/3o6rAM\nYaXzj6/3B3Z9cdtsMK839RnebgdPjNkK4UxC5tXnpFzcSYCvajK7XWwHnCYQdw0S\nRvVnSBRGVHBYUlAz5z+O9391XaD7Hg0j367nNVxBAoGBAMFIOR5c+0UWHoobxKXX\nuCGxzIpZOjfhrLogE7+7a9jj8PNI4NqPHfs4G7MCRKFv+Garknv/26woBep1Oejy\nPD4bjV5hHUnBS9cXAdvKp874Kzm/qGPRyVdhzM0WlWGosJcf9piF6iOvlOtE8pAX\nDrKyCdpdVa35qdREjA8Th5A+\n-----END PRIVATE KEY-----\n",
-    "client_email": "firebase-adminsdk-fbsvc@ejene-d8ff7.iam.gserviceaccount.com",
-    "client_id": "101320601096418971113",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40ejene-d8ff7.iam.gserviceaccount.com",
-    "universe_domain": "googleapis.com"
-};
-
-// Current user state
-let currentUser = null;
-let userData = {};
 
 // Firebase collections
 const collections = {
     USERS: 'users',
     PROJECTS: 'projects',
     REQUESTS: 'requests',
-    ACTIVITIES: 'activities',
-    SETTINGS: 'settings'
+    ACTIVITIES: 'activities'
 };
 
-// Utility function to check if user is admin
-async function isAdmin(userId) {
-    try {
-        const userDoc = await db.collection(collections.USERS).doc(userId).get();
-        return userDoc.exists && userDoc.data().role === 'admin';
-    } catch (error) {
-        console.error('Error checking admin status:', error);
-        return false;
-    }
-}
+// Current user state
+let currentUser = null;
+let userData = {};
 
-// Initialize auth state listener
+// Auth state listener
 auth.onAuthStateChanged(async (user) => {
     currentUser = user;
     
     if (user) {
-        // Load user data
-        const userDoc = await db.collection(collections.USERS).doc(user.uid).get();
-        if (userDoc.exists) {
-            userData = userDoc.data();
-            
-            // Update UI based on user role
-            if (userData.role === 'admin') {
-                document.querySelectorAll('.admin-only').forEach(el => {
-                    el.style.display = 'block';
+        console.log('✅ User logged in:', user.email);
+        
+        // Load user data from Firestore
+        try {
+            const userDoc = await db.collection(collections.USERS).doc(user.uid).get();
+            if (userDoc.exists) {
+                userData = userDoc.data();
+                console.log('✅ User data loaded:', userData.username);
+            } else {
+                // Create new user document if doesn't exist
+                await db.collection(collections.USERS).doc(user.uid).set({
+                    email: user.email,
+                    username: user.email.split('@')[0],
+                    role: 'user',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
                 });
+                userData = { email: user.email, username: user.email.split('@')[0], role: 'user' };
             }
+        } catch (error) {
+            console.error('Error loading user data:', error);
         }
         
         // Redirect to dashboard if on login page
         if (window.location.pathname.includes('login.html')) {
-            window.location.href = 'dashboard.html';
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
         }
     } else {
-        // Redirect to login if not authenticated
-        if (!window.location.pathname.includes('login.html') && 
-            !window.location.pathname.includes('index.html')) {
+        console.log('⚠️ No user logged in');
+        // Redirect to login if not on public pages
+        const publicPages = ['/', '/index.html', '/login.html'];
+        if (!publicPages.includes(window.location.pathname)) {
             window.location.href = 'login.html';
         }
     }
@@ -92,6 +83,83 @@ window.firebaseApp = {
     collections,
     currentUser,
     userData,
-    isAdmin,
-    adminConfig
+    isAdmin: async (userId) => {
+        try {
+            const userDoc = await db.collection(collections.USERS).doc(userId).get();
+            return userDoc.exists && userDoc.data().role === 'admin';
+        } catch (error) {
+            console.error('Error checking admin status:', error);
+            return false;
+        }
+    }
 };
+
+// Utility function to show notifications
+window.showNotification = function(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+        <button class="notification-close">&times;</button>
+    `;
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 5000);
+    
+    // Close button functionality
+    notification.querySelector('.notification-close').addEventListener('click', () => {
+        notification.remove();
+    });
+};
+
+// Add notification styles if not present
+if (!document.querySelector('#notification-styles')) {
+    const style = document.createElement('style');
+    style.id = 'notification-styles';
+    style.textContent = `
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .notification-success { background: #238636; }
+        .notification-error { background: #f85149; }
+        .notification-info { background: #58a6ff; }
+        .notification-warning { background: #f0883e; }
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 10px;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+}
