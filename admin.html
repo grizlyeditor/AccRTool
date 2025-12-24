@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | FreeFire Toolkit</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="github-container">
+        <!-- GitHub Style Header -->
+        <header class="github-header">
+            <div class="header-left">
+                <div class="github-logo">
+                    <i class="fab fa-github"></i>
+                    <span>Admin Panel</span>
+                </div>
+                <nav class="github-nav">
+                    <a href="dashboard.html" class="nav-item">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                    <a href="#" class="nav-item active">
+                        <i class="fas fa-users"></i> Users
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="admin-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Admin</span>
+                </div>
+                <button class="btn btn-danger" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Admin Content -->
+        <div class="admin-content">
+            <!-- Stats Overview -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pendingRequests">0</h3>
+                        <p>Pending Requests</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="completedRequests">0</h3>
+                        <p>Completed</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon danger">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="failedRequests">0</h3>
+                        <p>Failed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="admin-table-section">
+                <div class="table-header">
+                    <h3>User Management</h3>
+                    <div class="table-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="userSearch" placeholder="Search users...">
+                        </div>
+                        <button class="btn" id="exportBtn">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Host</th>
+                                <th>Status</th>
+                                <th>Rate</th>
+                                <th>Emoji</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Requests Management -->
+            <div class="admin-table-section">
+                <div class="table-header">
+                    <h3>Pending Requests</h3>
+                    <div class="table-tabs">
+                        <button class="tab-btn active" data-tab="all">All</button>
+                        <button class="tab-btn" data-tab="pending">Pending</button>
+                        <button class="tab-btn" data-tab="ready">Ready</button>
+                        <button class="tab-btn" data-tab="failed">Failed</button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Host</th>
+                                <th>Days</th>
+                                <th>Status</th>
+                                <th>Chances</th>
+                                <th>Debug Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTable">
+                            <!-- Requests will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rate Modal -->
+    <div class="modal" id="rateModal">
+        <div class="modal-content rate-modal">
+            <div class="modal-header">
+                <h3>Set Success Rate</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="rate-wheel">
+                    <div class="wheel-option" data-value="ready">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Almost Ready</span>
+                    </div>
+                    <div class="wheel-option" data-value="pending">
+                        <i class="fas fa-clock"></i>
+                        <span>Pending</span>
+                    </div>
+                    <div class="wheel-option" data-value="15">
+                        <i class="fas fa-percentage"></i>
+                        <span>15% Chance</span>
+                    </div>
+                    <div class="wheel-option" data-value="nochance">
+                        <i class="fas fa-times-circle"></i>
+                        <span>No Chance</span>
+                    </div>
+                    <div class="wheel-option" data-value="dead">
+                        <i class="fas fa-skull-crossbones"></i>
+                        <span>Dead</span>
+                    </div>
+                </div>
+                <div class="debug-code-section">
+                    <label>Debug Code</label>
+                    <textarea id="debugCode" rows="4" placeholder="Paste debug code here..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn" id="cancelRateBtn">Cancel</button>
+                    <button class="btn btn-primary" id="saveRateBtn">Save & Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

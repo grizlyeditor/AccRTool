@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeFire Toolkit | Advanced GitHub Style</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="github-container">
+        <!-- GitHub Style Header -->
+        <header class="github-header">
+            <div class="header-left">
+                <div class="github-logo">
+                    <i class="fab fa-github"></i>
+                    <span>FreeFire Toolkit</span>
+                </div>
+                <nav class="github-nav">
+                    <a href="#" class="nav-item active">Dashboard</a>
+                    <a href="#" class="nav-item">Workbench</a>
+                    <a href="#" class="nav-item">Modules</a>
+                    <a href="#" class="nav-item">Settings</a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search or jump to...">
+                </div>
+                <div class="user-menu">
+                    <button class="btn btn-primary" id="loginBtn">Sign in</button>
+                    <button class="btn" id="registerBtn">Sign up</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="github-main">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1>FreeFire Advanced Toolkit</h1>
+                    <p class="hero-subtitle">Professional tools for FreeFire developers and analysts</p>
+                    <div class="hero-features">
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure Authentication</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-code-branch"></i>
+                            <span>API Workbench</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-tools"></i>
+                            <span>Multiple Modules</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Real-time Analysis</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3>Token Management</h3>
+                    <p>Extract, analyze, and manage FreeFire tokens securely</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>JWT Analysis</h3>
+                    <p>Decode and analyze JWT tokens with detailed insights</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Base64 Tools</h3>
+                    <p>Decode/Encode Base64 requests and responses</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Admin Panel</h3>
+                    <p>Manage users and monitor requests in real-time</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- GitHub Style Footer -->
+        <footer class="github-footer">
+            <div class="footer-content">
+                <p>© 2024 FreeFire Toolkit. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Security</a>
+                    <a href="#">Status</a>
+                    <a href="#">Docs</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content github-modal">
+            <div class="modal-header">
+                <h3>Sign in to FreeFire Toolkit</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                </form>
+                <div class="divider">OR</div>
+                <button class="btn btn-block github-btn">
+                    <i class="fab fa-github"></i> Continue with GitHub
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content github-modal">
+            <div class="modal-header">
+                <h3>Create your account</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="registerUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Create account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
