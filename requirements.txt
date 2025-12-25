@@ -9,8 +9,8 @@ PyJWT==2.8.0
 requests==2.31.0
 aiohttp==3.8.5
 httpx==0.24.1
-protobuf==3.20.3
-blackboxprotobuf==1.2.0
+protobuf==3.20.3       # Firestore compatible
+# blackboxprotobuf hata diya kyunki conflict karta
 base64io==1.0.3
 python-dotenv==1.0.0
 pydantic==2.3.0
